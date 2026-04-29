@@ -59,7 +59,7 @@ export default function Waitlist() {
 
       {/* Image and Button */}
       <motion.div
-        className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-30 flex flex-col items-center "
+        className="absolute top-[48%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-30 flex flex-col items-center "
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.8, type: "spring", stiffness: 150 }}
@@ -77,7 +77,7 @@ export default function Waitlist() {
                 disabled={loading}
               />
               <Button className='rounded-l-none' type="submit" style={{ borderColor: "black", borderWidth: "2px", borderLeftWidth: "0" }} disabled={loading}>
-                {loading ? "Joining..." : "Subscribe"}
+                {loading ? "Joining..." : "Join"}
               </Button>
             </div>
             {message && (
@@ -87,19 +87,21 @@ export default function Waitlist() {
             )}
           </form>
         </div>
+
       </motion.div>
+
 
       {/* Catchy Header Content - Positioned above the hands */}
       <motion.div
-        className="bg-neutral-300/20 backdrop-blur-xl absolute bottom-[15%] z-20 text-center px-8 py-6 w-fit rounded-3xl border border-white/10 shadow-2xl"
+        className="absolute bottom-[10%] z-20 text-center px-8 py-6 w-fit rounded-3xl  "
         initial={{ y: -30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.4 }}
       >
-        <p className="text-lg md:text-2xl text-neutral-600 font-light tracking-wide  max-w-2xl mx-auto drop-shadow-lg">
-          Solving 500 questions, and still can fumble coding rounds.
+        <p className="text-lg md:text-2xl text-neutral-600 font-semibold tracking-wide  font-heading max-w-2xl mx-auto  " style={{ fontFamily: "inter" }}>
+          Stop solving in silence.
           <br className="hidden:md-block" />
-          Let Slate handle the <u>Communication</u> for you.
+          <span className="font-light">Practice with purpose.</span>
         </p>
       </motion.div>
     </div >
