@@ -1,15 +1,24 @@
-import axios from "axios";
+"use server";
+
+import postgres from "postgres";
 
 export const joinWaitlist = async (data: { email: string }) => {
-	const API_URL = process.env.NEXT_PUBLIC_SERVER_URL;
-	if (!API_URL) {
-		throw new Error("NEXT_PUBLIC_SERVER_URL is not defined");
+	const connectionString = process.env.DATABASE_URL;
+	if (!connectionString) {
+		throw new Error("DATABASE_URL is not defined");
 	}
 
+	const sql = postgres(connectionString, { ssl: "require" });
+
 	try {
-		const res = await axios.post(`${API_URL}/join`, data);
-		return res.data;
+		await sql`INSERT INTO waitlist (email) VALUES (${data.email})`;
+		return { success: true };
 	} catch (error: any) {
-		throw new Error(error.response?.data?.message || "Could not join waitlist");
+		if (error.code === "23505") { // Unique violation
+			throw new Error("Email already exists");
+		}
+		throw new Error(error.message || "Could not join waitlist");
+	} finally {
+		await sql.end();
 	}
 };
