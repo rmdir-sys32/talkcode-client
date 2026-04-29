@@ -36,11 +36,12 @@ export default function Waitlist() {
         transition={{ duration: 1.2, ease: "easeOut" }}
       >
         <Image
-          src="/images/hero3.png"
+          src="/images/hero4.png"
           alt="TalkCode Connect"
           fill
           className="object-cover opacity-80 translate-x-2"
           priority
+          unoptimized
         />
         {/* Subtle gradient overlay to ensure the button and text stand out */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 mix-blend-overlay" />
