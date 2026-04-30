@@ -1,11 +1,13 @@
 "use client"
-import { joinWaitlist } from "@/api/join/route"
+import { joinWaitlist } from "@/api/join/actions"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Analytics } from "@vercel/analytics/next"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { useState } from "react"
 export default function Waitlist() {
+
   const [email, setEmail] = useState("")
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState("")
@@ -27,6 +29,7 @@ export default function Waitlist() {
   }
   return (
     <div className="bg-black min-h-screen w-screen flex flex-col items-center justify-center font-sans text-white relative overflow-hidden">
+      <Analytics></Analytics>
 
       {/* Background Image - Full Screen with smooth scale-in animation */}
       <motion.div
@@ -81,12 +84,13 @@ export default function Waitlist() {
                 {loading ? "Joining..." : "Join"}
               </Button>
             </div>
-            {message && (
-              <p className={`mt-4  text-wrap text-sm font-medium ${message.includes("Success") ? "text-neutral-600" : "text-red-400"}`}>
-                {message}
-              </p>
-            )}
+
           </form>
+          {message && (
+            <p className={`mt-4  text-wrap text-sm font-medium ${message.includes("Success") ? "text-neutral-600" : "text-red-400"}`}>
+              {message}
+            </p>
+          )}
         </div>
 
       </motion.div>
