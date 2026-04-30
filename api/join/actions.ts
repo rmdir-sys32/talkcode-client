@@ -15,9 +15,9 @@ export const joinWaitlist = async (data: { email: string }) => {
 		return { success: true };
 	} catch (error: any) {
 		if (error.code === "23505") { // Unique violation
-			throw new Error("Email already exists");
+			return { error: "This email is already on the waitlist." };
 		}
-		throw new Error(error.message || "Could not join waitlist");
+		return { error: error.message || "Could not join waitlist" };
 	} finally {
 		await sql.end();
 	}

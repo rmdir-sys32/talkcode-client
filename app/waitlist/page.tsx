@@ -2,7 +2,6 @@
 import { joinWaitlist } from "@/api/join/actions"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Analytics } from "@vercel/analytics/next"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { useState } from "react"
@@ -16,20 +15,25 @@ export default function Waitlist() {
     e.preventDefault();
     if (!email) return;
     setLoading(true);
+    console.log(message)
     setMessage("");
     try {
-      await joinWaitlist({ email });
-      setMessage("Success! You've been added to the waitlist.");
-      setEmail("");
+      const res = await joinWaitlist({ email });
+      if (res.error) {
+        setMessage(res.error);
+      } else {
+        setMessage("Success! You've been added to the waitlist.");
+        setEmail("");
+      }
     } catch (err: any) {
-      setMessage(err.message || "Something went wrong.");
+      setMessage("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
   }
   return (
     <div className="bg-black min-h-screen w-screen flex flex-col items-center justify-center font-sans text-white relative overflow-hidden">
-      <Analytics></Analytics>
+
 
       {/* Background Image - Full Screen with smooth scale-in animation */}
       <motion.div
@@ -86,13 +90,13 @@ export default function Waitlist() {
             </div>
 
           </form>
-          {message && (
-            <p className={`mt-4  text-wrap text-sm font-medium ${message.includes("Success") ? "text-neutral-600" : "text-red-400"}`}>
-              {message}
-            </p>
-          )}
-        </div>
 
+        </div>
+        {message && (
+          <p className={`mt-4  text-wrap text-sm font-medium ${message.includes("Success") ? "text-neutral-600" : "text-red-400"}`}>
+            {message}
+          </p>
+        )}
       </motion.div>
 
 
@@ -105,7 +109,7 @@ export default function Waitlist() {
       >
         <p className="text-lg md:text-2xl text-neutral-600 font-semibold tracking-wide  font-heading max-w-2xl mx-auto  " style={{ fontFamily: "inter" }}>
           Stop solving in silence.
-          <br className="hidden:md-block" />
+          <br className="hidden md:block" />
           <span className="font-light">Practice with purpose.</span>
         </p>
       </motion.div>
